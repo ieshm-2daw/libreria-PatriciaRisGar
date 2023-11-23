@@ -7,4 +7,5 @@ class User(AbstractServer):
     dni = models.CharField(max_length='9')
     adress = models.CharField()
     telefono = models.PhoneNumberField()
+    
 
