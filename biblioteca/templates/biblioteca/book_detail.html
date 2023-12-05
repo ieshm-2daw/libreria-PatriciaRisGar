@@ -1,0 +1,28 @@
+{% extends "biblioteca/base.html" %} {% block content %}
+<div>
+  <h2>{{ book.title }}</h2>
+  <div>
+    <img src="{{ book.cover }}" alt="cover" />
+    <p>{{ book.authors }}</p>
+    <p>{{ book.publisher }}</p>
+    <p>{{ book.rating }}</p>
+    <p>{{ book.publicationDate }}</p>
+    <p>{{ book.genre }}</p>
+    <p>{{ book.isbn }}</p>
+    <p>{{ book.sumary }}</p>
+    <p>{{ book.aviability }}</p>
+  </div>
+  <a href="{% url 'listBooks' %}">
+    <button type="button">Volver a listado</button></a
+  >
+  <a href="{% url 'editBook' pk=book.pk %}">
+    <button type="button">Editar libro</button></a
+  >
+  <a href="{% url 'deleteBook' pk=book.pk %}">
+    <button type="button">Borrar libro</button></a
+  >
+  <a href="{% url 'createLoan' pk=book.pk %}">
+    <button type="button">Crear préstamo</button></a
+  >
+</div>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "biblioteca/base.html" %} {% block content %}
+
+<form action="" method="post"></form>
+    <h2>{{ book.title }}</h2>
+  <div>
+    <img src="{{ book.cover }}" alt="cover" />
+    <p>{{ book.authors }}</p>
+    <p>{{ book.publisher }}</p>
+    <p>{{ book.rating }}</p>
+    <p>{{ book.publicationDate }}</p>
+    <p>{{ book.genre }}</p>
+    <p>{{ book.isbn }}</p>
+    <p>{{ book.sumary }}</p>
+    <p>{{ book.aviability }}</p>
+  </div>
+
+  <button type="submit">Confirmar Prestamo</button>
+</form>
+{% endblock %}

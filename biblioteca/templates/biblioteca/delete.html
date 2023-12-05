@@ -1,0 +1,10 @@
+{% extends "biblioteca/base.html" %} {% block content %}
+<form action="" method="post">
+  {% csrf_token %}
+  <p>¿Borrar {{ book.title }}?</p>
+  <button type="submit" value="Confirmar">Aceptar</button>
+  <a href="{% url 'detailBook' pk=book.pk %}">
+    <button type="button">Volver a detalle del libro</button></a
+  >
+</form>
+{% endblock %}
