@@ -1,5 +1,6 @@
 
-from django.shortcuts import get_object_or_404, render
+from datetime import date
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic.list import ListView
@@ -9,10 +10,17 @@ from biblioteca.models import Book, Loan
 
 # Create your views here.
 
-#listado de libros
+#listado de libros disponibles
 class ListBooks (ListView):
     model = Book
     templete_name = 'biblioteca/book_list.html'
+    #queryset = Book.objects.filter(availability = 'available')
+
+#listado de libros prestados
+class LoanBooks (ListView):
+    model = Book
+    templete_name = 'biblioteca/books_loan.html'
+    queryset = Book.objects.filter(availability = 'loaned')
 
 #detalle de libro
 class DetailBook (DetailView):
@@ -48,6 +56,36 @@ class CreateLoan(View):
         book = get_object_or_404(Book, pk=pk)
         return render(request,self.templateList,{'book':book})
 
-    def post (seld,request)
-        book = 
-        
+    def post (self,request,pk):
+
+        book = get_object_or_404(Book, pk=pk)
+        book.availability = 'loaned'
+        book.save()
+
+        Loan.objects.create(
+                book = book,
+                user = request.user,
+                loanDate = date.today()
+            )
+        return redirect ('detailBook', pk=pk)
+    
+class ReturnBook(View):
+    templateList = 'biblioteca/book_return.html'
+
+    def get (self,request,pk):
+        bookLoaned = get_object_or_404(Book, pk=pk)
+        return render(request,self.templateList,{'book':bookLoaned})
+
+    def post (self,request,pk):
+        bookLoaned = get_object_or_404(Book, pk=pk)
+        loan = get_object_or_404(Loan,book=bookLoaned,user=request.user,status='loaned')
+
+        loan.status = 'returned'
+        loan.returnDate = date.today()
+        loan.save()
+
+        bookLoaned.availability = 'available'
+        bookLoaned.save()
+
+        return redirect('detailBook', pk=pk)
+

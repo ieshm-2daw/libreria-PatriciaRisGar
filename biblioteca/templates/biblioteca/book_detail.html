@@ -2,7 +2,7 @@
 <div>
   <h2>{{ book.title }}</h2>
   <div>
-    <img src="{{ book.cover }}" alt="cover" />
+    <img src="{{ book.cover.url }}" alt="cover" />
     <p>{{ book.authors }}</p>
     <p>{{ book.publisher }}</p>
     <p>{{ book.rating }}</p>
@@ -21,8 +21,15 @@
   <a href="{% url 'deleteBook' pk=book.pk %}">
     <button type="button">Borrar libro</button></a
   >
+  {% if book.availability == 'available' %}
   <a href="{% url 'createLoan' pk=book.pk %}">
     <button type="button">Crear préstamo</button></a
   >
+  {% else %}
+  <a href="{% url 'returnBook' pk=book.pk %}">
+    <button type="button">Devolver préstamo</button></a
+  >
+  {% endif %}
+
 </div>
 {% endblock %}

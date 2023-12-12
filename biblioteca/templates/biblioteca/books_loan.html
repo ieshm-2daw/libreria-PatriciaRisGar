@@ -1,9 +1,9 @@
 {% extends "biblioteca/base.html" %} {% block crear %}
 <a href="{% url 'createBook' %}" role="button"> Crear Libro</a>
-<a href="{% url 'loanBooks' %}" role="button"> Libros prestados</a>
+<a href="{% url 'listBook' %}" role="button"> Libros disponibles</a>
 {% endblock crear %} {% block content %}
 
-<h1>Listado libros disponibles</h1>
+<h1>Listado libros prestados</h1>
 
 {% for book in object_list %}
 

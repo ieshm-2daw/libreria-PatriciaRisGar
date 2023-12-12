@@ -14,7 +14,7 @@ class User(AbstractUser):
         return self.username
 
 class Book(models.Model):
-    STATUS = [('available', 'Available'),('loaned', 'Loaned'), ('loanProcess','In loan process'),]
+    STATUS = [('available', 'Available'),('loaned', 'Loaned'),]
 
     title = models.CharField(max_length=200)
     authors = models.ManyToManyField('Author')
@@ -25,7 +25,7 @@ class Book(models.Model):
     isbn = models.CharField(max_length=10)
     sumary = models.TextField()
     availability = models.CharField(max_length=11,choices=STATUS, default='available')
-    cover = models.ImageField(upload_to='cover', null = True, blank = True)
+    cover = models.ImageField(upload_to='cover/', null = True, blank = True)
 
     def __str__(self):
         return self.title
@@ -34,7 +34,7 @@ class Book(models.Model):
 class Author(models.Model):
     name = models.CharField(max_length=30)
     biograohy = models.TextField()
-    photo = models.ImageField(upload_to='photo',null = True, blank = True)
+    photo = models.ImageField(upload_to='photo/',null = True, blank = True)
 
     def __str__(self):
         return self.name
@@ -53,7 +53,7 @@ class Loan (models.Model):
 
     book = models.ForeignKey('Book', on_delete=models.CASCADE)
     loanDate = models.DateField()
-    returnDate = models.DateField()
+    returnDate = models.DateField(null = True, blank = True)
     user = models.ForeignKey('User', on_delete=models.CASCADE)
     status = models.CharField(max_length=11,choices=STATUS, default='loaned')
 

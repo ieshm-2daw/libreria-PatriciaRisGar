@@ -1,7 +1,12 @@
 
 from django import forms
 
+from biblioteca.models import Book
 
-class LoanForm(forms.ModelForm):
+
+class BookForm(forms.ModelForm):
     class Meta:
-        model = 
+        model = Book
+        fields = [
+            'title','authors','publisher','rating', 'publicationDate', 'genre','isbn','sumary','cover'
+        ]
