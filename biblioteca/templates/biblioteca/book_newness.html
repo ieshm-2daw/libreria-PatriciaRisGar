@@ -1,0 +1,13 @@
+{% extends "biblioteca/base.html" %}{% block content %}
+
+<h1>Novedades</h1>
+<h4>Libros publicados el último mes</h4>
+
+{% for newBook in object_list %}
+<div>
+  <br />
+  <h6>{{ newBook.title }}</h6>
+  <img src="{{ newBook.cover.url }}" alt="cover" /> <br />
+  <a href="{% url 'detailBook' pk=newBook.pk %}">Ver detalle</a>
+</div>
+{% endfor %} {% endblock %}

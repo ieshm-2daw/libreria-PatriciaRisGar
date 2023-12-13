@@ -1,16 +1,12 @@
-{% extends "biblioteca/base.html" %} {% block crear %}
-<a href="{% url 'createBook' %}" role="button"> Crear Libro</a>
-<a href="{% url 'listBook' %}" role="button"> Libros disponibles</a>
-{% endblock crear %} {% block content %}
+{% extends "biblioteca/base.html" %}{% block content %}
 
-<h1>Listado libros prestados</h1>
+<h2>Listado libros prestados</h2>
 
 {% for book in object_list %}
 
 <div>
-  <a href="{% url 'detailBook' pk=book.pk %}">
-    <button type="button">{{ book.title }}</button></a
-  >
+  {{ book.cover.url }} {{ book.title }}
+  <a href="{% url 'detailBook' pk=book.pk %}">Ver detalle</a>
 </div>
 
 {% endfor %} {% endblock %}

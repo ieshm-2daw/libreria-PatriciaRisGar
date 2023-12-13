@@ -5,12 +5,9 @@
     <h2>{{ book.title }}</h2>
     <div>
       <img src="{{ book.cover.url }}" alt="cover" />
-      <p>{{ book.authors }}</p>
-      <p>{{ book.isbn }}</p>
+      <p>Autor: {{ book.authors }}</p>
+      <p>ISBN: {{ book.isbn }}</p>
     </div>
-    <a href="{% url 'listBooks' %}">
-      <button type="button">Volver a listado</button></a
-    >
     <input type="submit" value="Confirmar devolucion" />
   </div>
 </form>

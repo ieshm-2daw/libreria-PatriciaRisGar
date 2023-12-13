@@ -1,5 +1,6 @@
 
-from datetime import date
+from datetime import date, timedelta
+from typing import Any
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.views import View
@@ -14,7 +15,7 @@ from biblioteca.models import Book, Loan
 class ListBooks (ListView):
     model = Book
     templete_name = 'biblioteca/book_list.html'
-    #queryset = Book.objects.filter(availability = 'available')
+    queryset = Book.objects.filter(availability = 'available')
 
 #listado de libros prestados
 class LoanBooks (ListView):
@@ -43,9 +44,9 @@ class DeleteBook (DeleteView):
 #Añadir libro
 class CreateBook (CreateView):
     model = Book
-    fields = ['title','authors', 'publicationDate','publisher','rating','genre','isbn','sumary','availability']
+    fields = ['title','authors', 'publicationDate','publisher','rating','genre','isbn','sumary','availability','cover']
     template_name = 'biblioteca/book_create.html'
-    success_url = reverse_lazy('detailBook')
+    success_url = reverse_lazy('listBooks',)
 
 
 #Crear prestamo
@@ -68,7 +69,8 @@ class CreateLoan(View):
                 loanDate = date.today()
             )
         return redirect ('detailBook', pk=pk)
-    
+
+#Devolver libro
 class ReturnBook(View):
     templateList = 'biblioteca/book_return.html'
 
@@ -88,4 +90,22 @@ class ReturnBook(View):
         bookLoaned.save()
 
         return redirect('detailBook', pk=pk)
+    
+# Listado de mis prestamos diferenciando devuletos y prestados
+class MyLoans(ListView):
+        model = Loan
+        template_name = 'biblioteca/loan_list.html'
 
+        def get_context_data(self,**kwargs: Any) -> dict[str, Any]:
+            context = super().get_context_data(**kwargs)
+            context['loaned_Loans'] = Loan.objects.filter(status='loaned', user = self.request.user)
+            context['returned_Loans'] = Loan.objects.filter(status='returned', user = self.request.user)
+
+            return context
+        
+#Listar libros nuevosbook
+class Newness (ListView):
+    model = Book
+    template_name = 'biblioteca/book_newness.html'
+
+    queryset = Book.objects.filter(publicationDate__gt=date.today() - timedelta(days=30)) 

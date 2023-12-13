@@ -1,0 +1,37 @@
+{% extends "biblioteca/base.html" %}{% block content %}
+
+<h2>Listado de todos los libros</h2>
+
+<section>
+  <h3>Libros prestados</h3>
+  {% for loaned in loaned_Loans %}
+  <div>
+    <br />
+    <h6>{{ loaned.book.title }}</h6>
+    <img src="{{ loaned.book.cover.url }}" alt="cover" /> <br />
+    <br />
+    Fecha prestamo: {{loaned.loanDate}} <br />
+    <a href="{% url 'returnBook' pk=loaned.book.pk %}" role="button">
+      Devolver libro
+    </a>
+  </div>
+
+  {% endfor %}
+</section>
+
+<section>
+  <h3>Libros devueltos</h3>
+  {% for returned in returned_Loans %}
+  <div>
+    <br />
+    <h6>{{ returned.book.title }}</h6>
+    <img src="{{ returned.book.cover.url }}" alt="cover" /> <br />
+
+    Fecha prestamo: {{returned.loanDate}} <br />Fecha devolucion:
+    {{returned.returnDate}}
+  </div>
+
+  {% endfor %}
+</section>
+
+{% endblock %}

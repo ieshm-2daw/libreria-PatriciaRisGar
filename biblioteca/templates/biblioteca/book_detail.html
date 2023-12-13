@@ -3,33 +3,22 @@
   <h2>{{ book.title }}</h2>
   <div>
     <img src="{{ book.cover.url }}" alt="cover" />
-    <p>{{ book.authors }}</p>
-    <p>{{ book.publisher }}</p>
-    <p>{{ book.rating }}</p>
-    <p>{{ book.publicationDate }}</p>
-    <p>{{ book.genre }}</p>
-    <p>{{ book.isbn }}</p>
-    <p>{{ book.sumary }}</p>
-    <p>{{ book.aviability }}</p>
+    <p>Autor: {{ book.authors }}</p>
+    <p>Editorial: {{ book.publisher }}</p>
+    <p>Calificación: {{ book.rating }}</p>
+    <p>Fecha publicación: {{ book.publicationDate }}</p>
+    <p>Genero: {{ book.genre }}</p>
+    <p>ISBN: {{ book.isbn }}</p>
+    <p>Resumen: {{ book.sumary }}</p>
+    <p>Disponibilidad en la biblioteca: {{ book.availability }}</p>
   </div>
-  <a href="{% url 'listBooks' %}">
-    <button type="button">Volver a listado</button></a
-  >
-  <a href="{% url 'editBook' pk=book.pk %}">
-    <button type="button">Editar libro</button></a
-  >
-  <a href="{% url 'deleteBook' pk=book.pk %}">
-    <button type="button">Borrar libro</button></a
-  >
-  {% if book.availability == 'available' %}
-  <a href="{% url 'createLoan' pk=book.pk %}">
-    <button type="button">Crear préstamo</button></a
-  >
-  {% else %}
-  <a href="{% url 'returnBook' pk=book.pk %}">
-    <button type="button">Devolver préstamo</button></a
-  >
-  {% endif %}
 
+  <a href="{% url 'editBook' pk=book.pk %}" role="button"> Editar libro </a>
+  <a href="{% url 'deleteBook' pk=book.pk %}" role="button"> Borrar libro </a>
+  {% if book.availability == 'available' %}
+  <a href="{% url 'createLoan' pk=book.pk %}" role="button"> Crear préstamo </a>
+  {% else %}
+  <a href="{% url 'returnBook' pk=book.pk %}" role="button"> Devolver libro </a>
+  {% endif %}
 </div>
 {% endblock %}

@@ -1,20 +1,15 @@
 {% extends "biblioteca/base.html" %} {% block content %}
 
-<h2>{{ book.title }}</h2>
+<h2>Confirmar prestamo de {{ book.title }}</h2>
 <div>
   <img src="{{ book.cover.url }}" alt="cover" />
-  <p>{{ book.authors }}</p>
-  <p>{{ book.publisher }}</p>
-  <p>{{ book.rating }}</p>
-  <p>{{ book.publicationDate }}</p>
-  <p>{{ book.genre }}</p>
-  <p>{{ book.isbn }}</p>
-  <p>{{ book.sumary }}</p>
-  <p>{{ book.aviability }}</p>
+  <p>Autor: {{ book.authors }}</p>
+  <p>ISBN: {{ book.isbn }}</p>
+  <p>Resumen: {{ book.sumary }}</p>
 </div>
 
 <form action="" method="post">
   {% csrf_token %}
-  <button type="submit">Confirmar Prestamo</button>
+  <button type="submit">Confirmar prestamo</button>
 </form>
 {% endblock %}
