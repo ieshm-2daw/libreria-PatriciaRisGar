@@ -15,12 +15,17 @@ from biblioteca.models import Book, Loan
 class ListBooks (ListView):
     model = Book
     templete_name = 'biblioteca/book_list.html'
-    queryset = Book.objects.filter(availability = 'available')
+    def get_context_data(self,**kwargs: Any) -> dict[str, Any]:
+            context = super().get_context_data(**kwargs)
+            context['available_Books'] = Book.objects.filter(availability='available')
+            context['loaned_Books'] = Book.objects.filter(availability='loaned')
+
+            return context
 
 #listado de libros prestados
 class LoanBooks (ListView):
     model = Book
-    templete_name = 'biblioteca/books_loan.html'
+    template_name = 'biblioteca/books_loan.html'
     queryset = Book.objects.filter(availability = 'loaned')
 
 #detalle de libro
@@ -46,7 +51,7 @@ class CreateBook (CreateView):
     model = Book
     fields = ['title','authors', 'publicationDate','publisher','rating','genre','isbn','sumary','availability','cover']
     template_name = 'biblioteca/book_create.html'
-    success_url = reverse_lazy('listBooks',)
+    success_url = reverse_lazy('listBooks')
 
 
 #Crear prestamo
@@ -102,7 +107,7 @@ class MyLoans(ListView):
             context['returned_Loans'] = Loan.objects.filter(status='returned', user = self.request.user)
 
             return context
-        
+
 #Listar libros nuevosbook
 class Newness (ListView):
     model = Book

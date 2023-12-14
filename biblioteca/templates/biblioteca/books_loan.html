@@ -5,8 +5,9 @@
 {% for book in object_list %}
 
 <div>
-  {{ book.cover.url }} {{ book.title }}
-  <a href="{% url 'detailBook' pk=book.pk %}">Ver detalle</a>
+	<img src="{{ book.cover.url }}" alt="cover" /> <br />
+	{{ book.title }} <br>
+	<a href="{% url 'detailBook' pk=book.pk %}">Ver detalle</a>
 </div>
 
 {% endfor %} {% endblock %}

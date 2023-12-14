@@ -1,6 +1,10 @@
 {% extends "biblioteca/base.html" %} {% block content %}
-<form action="" method="post">
-  {% csrf_token %} {{ form.as_p }}
-  <button type="submit">Crear libro</button>
+<form
+	method="post"
+	enctype="multipart/form-data"
+	action="{% url 'createBook' %}">
+	{% csrf_token %} {{ form.as_p }}
+	<button type="submit">Guardar</button>
 </form>
+
 {% endblock %}

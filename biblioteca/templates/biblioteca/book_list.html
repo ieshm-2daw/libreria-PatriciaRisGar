@@ -1,13 +1,36 @@
 {% extends "biblioteca/base.html" %} {% block content %}
-
+<h1>Todos los libros</h1>
 <h2>Listado libros disponibles</h2>
 
-{% for book in object_list %}
+{% for book in available_Books %}
 
 <div>
-  <img src="{{ book.cover.url }}" alt="cover" /> <br />
-  {{ book.title }} <br />
-  <a href="{% url 'detailBook' pk=book.pk %}">Ver detalle</a>
+	{% if book.cover %}
+	<img src="{{ book.cover.url }}" alt="cover" /> <br />
+	{{ book.title }} <br />
+	<a href="{% url 'detailBook' pk=book.pk %}">Ver detalle</a>
+	{% else %}
+	<p>
+		<br />
+		No tiene portada
+		<br />
+		{{ book.title }} <br />
+		<a href="{% url 'detailBook' pk=book.pk %}">Ver detalle</a>
+	</p>
+	{% endif %}
+</div>
+
+{% endfor %}
+
+<br />
+<h2>Listado libros prestados</h2>
+
+{% for book in loaned_Books %}
+
+<div>
+	<img src="{{ book.cover.url }}" alt="cover" /> <br />
+	{{ book.title }} <br />
+	<a href="{% url 'detailBook' pk=book.pk %}">Ver detalle</a>
 </div>
 
 {% endfor %} {% endblock %}

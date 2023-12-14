@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import MaxValueValidator
 from django.db import models
+from PIL import Image
 
 # Create your models here.
 
@@ -25,7 +26,7 @@ class Book(models.Model):
     isbn = models.CharField(max_length=10)
     sumary = models.TextField()
     availability = models.CharField(max_length=11,choices=STATUS, default='available')
-    cover = models.ImageField(upload_to='cover/', null = True, blank = True)
+    cover = models.ImageField(upload_to='cover/', null= True, blank= True)
 
     def __str__(self):
         return self.title

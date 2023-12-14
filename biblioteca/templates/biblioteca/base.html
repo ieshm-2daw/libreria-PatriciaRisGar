@@ -1,51 +1,51 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/@picocss/pico@latest/css/pico.classless.min.css" />
-    <title>Biblioteca</title>
-  </head>
-  <body>
-    <header>
-      <nav>
-        <ul>
-          <li>
-            <a href="{% url 'listBooks' %}" role="button">
-              Libros disponibles</a
-            >
-          </li>
-          <li>
-            <a href="{% url 'createBook' %}" role="button"> Crear Libro</a>
-          </li>
-          <li>
-            <a href="{% url 'loanBooks' %}" role="button"> Libros prestados</a>
-          </li>
-          <li>
-            <a href="{% url 'myLoans' %}" role="button">Mis libros</a>
-          </li>
-          <li>
-            <a href="{% url 'newness' %}" role="button">Novedades</a>
-          </li>
-        </ul>
-      </nav>
-    </header>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link
+			rel="stylesheet"
+			href="https://unpkg.com/@picocss/pico@latest/css/pico.classless.min.css" />
+		<title>Biblioteca</title>
+	</head>
+	<body>
+		<header>
+			<nav>
+				<ul>
+					<li>
+						<strong><a href="{% url 'listBooks' %}"> Biblioteca</a></strong>
+					</li>
+				</ul>
+				<ul>
+					<li>
+						<a href="{% url 'createBook' %}" role="button"> Crear Libro</a>
+					</li>
+					<li>
+						<a href="{% url 'loanBooks' %}" role="button"> Libros prestados</a>
+					</li>
+					<li>
+						<a href="{% url 'myLoans' %}" role="button">Mis libros</a>
+					</li>
+					<li>
+						<a href="{% url 'newness' %}" role="button">Novedades</a>
+					</li>
+				</ul>
+			</nav>
+		</header>
 
-    <main>
-      <article data-theme="light">{% block content%} {% endblock%}</article>
-    </main>
+		<main>
+			<article data-theme="light">{% block content%} {% endblock%}</article>
+		</main>
 
-    <footer>
-      <small
-        >Built with <a href="https://picocss.com">Pico</a> & Patricia Riscart
-        Garcia •
-        <a
-          href="https://github.com/picocss/examples/blob/master/v1-classless/index.html"
-          >Source code</a
-        ></small
-      >
-    </footer>
-  </body>
+		<footer>
+			<small
+				>Built with <a href="https://picocss.com">Pico</a> & Patricia Riscart
+				Garcia •
+				<a
+					href="https://github.com/picocss/examples/blob/master/v1-classless/index.html"
+					>Source code</a
+				></small
+			>
+		</footer>
+	</body>
 </html>
