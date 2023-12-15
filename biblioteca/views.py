@@ -1,4 +1,5 @@
 
+from django.db.models import Max
 from datetime import date, timedelta
 from typing import Any
 from django.shortcuts import get_object_or_404, redirect, render
@@ -21,6 +22,8 @@ class ListBooks (ListView):
             context['loaned_Books'] = Book.objects.filter(availability='loaned')
 
             return context
+    
+    
 
 #listado de libros prestados
 class LoanBooks (ListView):
@@ -71,7 +74,8 @@ class CreateLoan(View):
         Loan.objects.create(
                 book = book,
                 user = request.user,
-                loanDate = date.today()
+                loanDate = date.today(),
+                returnDate = date.today() + timedelta(days=30),
             )
         return redirect ('detailBook', pk=pk)
 
@@ -114,3 +118,18 @@ class Newness (ListView):
     template_name = 'biblioteca/book_newness.html'
 
     queryset = Book.objects.filter(publicationDate__gt=date.today() - timedelta(days=30)) 
+
+#Panel de control bibliotecario
+class ControlPanel (ListView):
+    model = Loan
+    template_name = 'biblioteca/panel.html'
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context['loanCount'] = Loan.objects.count()
+        context['availableBooks'] = Book.objects.filter(availability = 'available').count()
+        context['noReturned'] = Loan.objects.filter(returnDate__lt=date.today(), status = 'loaned')
+        context['upcomingLoans'] = Loan.objects.filter(returnDate__lt= date.today() + timedelta(days=7), status = 'loaned')
+        context['topRatingBook'] = Book.objects.all().order_by('-rating')
+        
+        return context

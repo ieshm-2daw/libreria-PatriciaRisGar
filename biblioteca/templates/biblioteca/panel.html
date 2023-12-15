@@ -1,0 +1,24 @@
+{% extends "biblioteca/base.html" %} {% block content %}
+
+<h1>Panel de control</h1>
+
+<h6>Número de libros prestados: {{loanCount}}</h6>
+
+<h6>Número de libros disponibles: {{availableBooks}}</h6>
+
+<h6>Libros no devueltos:</h6>
+{% for loan in noReturned %}
+<p>{{ loan.book.title }}</p>
+{% endfor %}
+
+<h6>Libros pŕoximos a devolver:</h6>
+{% for loan in upcomingLoans %}
+<p>{{ loan.book.title }}</p>
+{% endfor %}
+
+<h6>Libros mas valorados:</h6>
+{% for book in topRatingBook %}
+<p>{{ book.title }} {{ book.rating }}</p>
+{% endfor %} 
+
+{% endblock %}

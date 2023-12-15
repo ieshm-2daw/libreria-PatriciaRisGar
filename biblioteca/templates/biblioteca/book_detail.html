@@ -1,24 +1,24 @@
 {% extends "biblioteca/base.html" %} {% block content %}
 <div>
-  <h2>{{ book.title }}</h2>
-  <div>
-    <img src="{{ book.cover.url }}" alt="cover" />
-    <p>Autor: {{ book.authors }}</p>
-    <p>Editorial: {{ book.publisher }}</p>
-    <p>Calificación: {{ book.rating }}</p>
-    <p>Fecha publicación: {{ book.publicationDate }}</p>
-    <p>Genero: {{ book.genre }}</p>
-    <p>ISBN: {{ book.isbn }}</p>
-    <p>Resumen: {{ book.sumary }}</p>
-    <p>Disponibilidad en la biblioteca: {{ book.availability }}</p>
-  </div>
+	<h2>{{ book.title }}</h2>
+	<div>
+		<img src="{{ book.cover.url }}" alt="cover" />
+		<p>Autor: {{ book.authors }}</p>
+		<p>Editorial: {{ book.publisher }}</p>
+		<p>Calificación: {{ book.rating }}</p>
+		<p>Fecha publicación: {{ book.publicationDate }}</p>
+		<p>Genero: {{ book.genre }}</p>
+		<p>ISBN: {{ book.isbn }}</p>
+		<p>Resumen: {{ book.sumary }}</p>
+		<p>Disponibilidad en la biblioteca: {{ book.availability }}</p>
+	</div>
 
-  <a href="{% url 'editBook' pk=book.pk %}" role="button"> Editar libro </a>
-  <a href="{% url 'deleteBook' pk=book.pk %}" role="button"> Borrar libro </a>
-  {% if book.availability == 'available' %}
-  <a href="{% url 'createLoan' pk=book.pk %}" role="button"> Crear préstamo </a>
-  {% else %}
-  <a href="{% url 'returnBook' pk=book.pk %}" role="button"> Devolver libro </a>
-  {% endif %}
+	<a href="{% url 'editBook' pk=book.pk %}" role="button"> Editar libro </a>
+	<a href="{% url 'deleteBook' pk=book.pk %}" role="button"> Borrar libro </a>
+	{% if book.availability == 'available' %}
+	<a href="{% url 'createLoan' pk=book.pk %}" role="button"> Crear préstamo </a>
+	{% else %}
+	<a href="{% url 'returnBook' pk=book.pk %}" role="button"> Devolver libro </a>
+	{% endif %}
 </div>
 {% endblock %}
