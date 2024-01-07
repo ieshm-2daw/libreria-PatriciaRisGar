@@ -20,10 +20,20 @@ class ListBooks (ListView):
             context = super().get_context_data(**kwargs)
             context['available_Books'] = Book.objects.filter(availability='available')
             context['loaned_Books'] = Book.objects.filter(availability='loaned')
+            
+            allGenres =[]
+            for book in Book.objects.all():
+                if book.genre not in allGenres:
+                    allGenres.append(book.genre)
+            context['generateFilter'] = allGenres
 
+            genreSelected = self.request.GET.getlist('genre')
+            if genreSelected:
+                for gen in genreSelected:
+                    context['available_Books'] = context['available_Books'].filter(genre=gen)
+                    context['loaned_Books'] = context['loaned_Books'].filter(genre=gen)
+            
             return context
-    
-    
 
 #listado de libros prestados
 class LoanBooks (ListView):

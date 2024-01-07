@@ -1,9 +1,27 @@
 {% extends "biblioteca/base.html" %} {% block content %}
 <h1>Todos los libros</h1>
+<form method="GET">
+	{% csrf_token %}
+	<details role="list">
+		<summary aria-haspopup="listbox">Filtrar por genero</summary>
+		<ul role="listbox">
+			{% for genre in generateFilter %}
+			<li>
+				<label>
+					<input type="checkbox" name="genre" value="{{genre}}" />
+					{{genre}}
+				</label>
+			</li>
+			{% endfor %}
+			<li>
+				<input type="submit" value="Filtrar" />
+			</li>
+		</ul>
+	</details>
+</form>
+
 <h2>Listado libros disponibles</h2>
-
 {% for book in available_Books %}
-
 <div>
 	{% if book.cover %}
 	<img src="{{ book.cover.url }}" alt="cover" /> <br />
