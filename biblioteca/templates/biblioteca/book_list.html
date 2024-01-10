@@ -3,7 +3,15 @@
 <form method="GET">
 	{% csrf_token %}
 	<details role="list">
-		<summary aria-haspopup="listbox">Filtrar por genero</summary>
+		<summary aria-haspopup="listbox">
+			{% if listFiltertGenre is empty %} 
+			Filtrar por genero 
+			{% else %} 
+				{% for filterGenre in listFiltertGenre %} 
+					{{ filterGenre }} 
+				{% endfor %} 
+			{% endif %}
+		</summary>
 		<ul role="listbox">
 			{% for genre in generateFilter %}
 			<li>

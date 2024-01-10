@@ -10,4 +10,16 @@
 	<a href="{% url 'detailBook' pk=book.pk %}">Ver detalle</a>
 </div>
 
-{% endfor %} {% endblock %}
+{% endfor %}
+
+{% if page_obj.has_previous %}
+<a href="{% url 'loanBooks' %}?page={{ page_obj.previous_page_number}}">
+	Ir a página {{ page_obj.previous_page_number }}
+</a>
+{% endif %} La pagina actual es {{page_obj.number}} de {{ page_obj.paginator.num_pages }} {% if page_obj.has_next %}
+<a href="{% url 'loanBooks' %}?page={{ page_obj.next_page_number}}">
+	Ir a página {{ page_obj.next_page_number }}</a
+>
+{% endif %}
+
+{% endblock %}

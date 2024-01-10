@@ -9,6 +9,7 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView, DeleteView, CreateView
 from biblioteca.models import Book, Loan
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 
@@ -25,20 +26,22 @@ class ListBooks (ListView):
             for book in Book.objects.all():
                 if book.genre not in allGenres:
                     allGenres.append(book.genre)
-            context['generateFilter'] = allGenres
+            context['generateFilter'] = allGenres 
 
             genreSelected = self.request.GET.getlist('genre')
             if genreSelected:
-                for gen in genreSelected:
+                context['listFiltertGenre'] = genreSelected
+                for gen in genreSelected:                    
                     context['available_Books'] = context['available_Books'].filter(genre=gen)
                     context['loaned_Books'] = context['loaned_Books'].filter(genre=gen)
             
             return context
 
 #listado de libros prestados
-class LoanBooks (ListView):
+class LoanBooks (LoginRequiredMixin,ListView):
     model = Book
     template_name = 'biblioteca/books_loan.html'
+    paginate_by = 2
     queryset = Book.objects.filter(availability = 'loaned')
 
 #detalle de libro
@@ -47,20 +50,20 @@ class DetailBook (DetailView):
     template_name = 'biblioteca/book_detail.html'
 
 #editar libro
-class EditBook (UpdateView):
+class EditBook (LoginRequiredMixin,UpdateView):
     model = Book
     fields = ['title','authors','publisher','rating','publicationDate','genre','isbn','sumary','availability']
     template_name = 'biblioteca/book_edit.html'
     success_url = reverse_lazy('listBooks')
 
 #borrar libro
-class DeleteBook (DeleteView):
+class DeleteBook (LoginRequiredMixin,DeleteView):
     model = Book
     template_name = 'biblioteca/delete.html'
     success_url = reverse_lazy ('listBooks')
 
 #Añadir libro
-class CreateBook (CreateView):
+class CreateBook (LoginRequiredMixin,CreateView):
     model = Book
     fields = ['title','authors', 'publicationDate','publisher','rating','genre','isbn','sumary','availability','cover']
     template_name = 'biblioteca/book_create.html'
@@ -68,7 +71,7 @@ class CreateBook (CreateView):
 
 
 #Crear prestamo
-class CreateLoan(View):
+class CreateLoan(LoginRequiredMixin,View):
     templateList = 'biblioteca/loan_create.html'
 
     def get (self, request,pk):
@@ -90,7 +93,7 @@ class CreateLoan(View):
         return redirect ('detailBook', pk=pk)
 
 #Devolver libro
-class ReturnBook(View):
+class ReturnBook(LoginRequiredMixin,View):
     templateList = 'biblioteca/book_return.html'
 
     def get (self,request,pk):
@@ -111,7 +114,7 @@ class ReturnBook(View):
         return redirect('detailBook', pk=pk)
     
 # Listado de mis prestamos diferenciando devuletos y prestados
-class MyLoans(ListView):
+class MyLoans(LoginRequiredMixin,ListView):
         model = Loan
         template_name = 'biblioteca/loan_list.html'
 
@@ -130,7 +133,7 @@ class Newness (ListView):
     queryset = Book.objects.filter(publicationDate__gt=date.today() - timedelta(days=30)) 
 
 #Panel de control bibliotecario
-class ControlPanel (ListView):
+class ControlPanel (LoginRequiredMixin,ListView):
     model = Loan
     template_name = 'biblioteca/panel.html'
 

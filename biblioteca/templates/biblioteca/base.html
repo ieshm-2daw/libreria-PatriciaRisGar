@@ -17,6 +17,7 @@
 					</li>
 				</ul>
 				<ul>
+					{% if user.is_authenticated %}
 					<li>
 						<a href="{% url 'createBook' %}" role="button"> Crear Libro</a>
 					</li>
@@ -27,11 +28,19 @@
 						<a href="{% url 'myLoans' %}" role="button">Mis libros</a>
 					</li>
 					<li>
-						<a href="{% url 'newness' %}" role="button">Novedades</a>
+						<a href="{% url 'controlPanel' %}" role="button"
+							>Panel de control</a
+						>
 					</li>
+					<li><a href="{% url 'logout' %}" role="button">Cerrar Sesión</a></li>
+					{% else %}
 					<li>
-						<a href="{% url 'controlPanel' %}" role="button">Panel de control</a>
+						<li>
+							<a href="{% url 'newness' %}" role="button">Novedades</a>
+						</li>
+						<a href="{% url 'login' %}" role="button">Iniciar Sesión</a>
 					</li>
+					{% endif %}
 				</ul>
 			</nav>
 		</header>
